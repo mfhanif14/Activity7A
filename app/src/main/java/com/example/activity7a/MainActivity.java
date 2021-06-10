@@ -31,7 +31,7 @@ import static android.content.ContentValues.TAG;
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TemanAdapter adapter;
-    private ArrayList<Teman> temanArrayList;
+    private ArrayList<Teman> temanArrayList = new ArrayList<>();
     private FloatingActionButton fab;
 
     private static final String TAG =MainActivity.class.getSimpleName();
@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void BacaData(){
+        temanArrayList.clear();
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 
         JsonArrayRequest jArr = new JsonArrayRequest(url_select,new Response.Listener<JSONArray>() {
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+                adapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener(){
             @Override
@@ -93,6 +95,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         requestQueue.add(jArr);
-
     }
 }
